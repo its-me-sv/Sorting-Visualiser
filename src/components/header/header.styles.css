@@ -1,0 +1,38 @@
+h1 {
+    text-align: center;
+    color: white;
+}
+
+.custom-button1 {
+  cursor:pointer;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size:1.4rem;
+  border-radius:7px;
+  border:1px solid #bbb;
+  padding: 0.7rem;
+  padding-top: 0;
+  padding-bottom: 0.3rem;
+}
+
+.box2 {
+    transition: 0.25s;
+    border:1px solid white;
+}
+
+.box2:hover {
+    transform: scale(1.1);
+    color:white;
+}
+
+.green2{
+    border-color: #8d69e0;
+    color: #8d69e0;
+}
+
+.green2:hover{
+    box-shadow:0px 5px 15px #8d69e0;
+    background-color: #8d69e0;
+}
