@@ -19,7 +19,7 @@ h1 {
 
 .box2 {
     transition: 0.25s;
-    border:1px solid white;
+    border:0.3rem solid white;
 }
 
 .box2:hover {
@@ -27,12 +27,24 @@ h1 {
     color:white;
 }
 
-.green2{
+.purple2{
     border-color: #8d69e0;
     color: #8d69e0;
 }
 
-.green2:hover{
+.purple2:hover{
     box-shadow:0px 5px 15px #8d69e0;
     background-color: #8d69e0;
+    border-color: rgb(232, 147, 243);
+}
+
+.red2{
+    border-color: #db4c4c;
+    color: #db4c4c;
+}
+
+.red2:hover{
+    box-shadow:0px 5px 15px #db4c4c;
+    background-color: #db4c4c;
+    border-color: pink;
 }
