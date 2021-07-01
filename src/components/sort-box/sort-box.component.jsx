@@ -14,6 +14,7 @@ const SortBox = ({array, algorithName, algorithm, theme, tbs}) => {
     const handleClick = () => {
         algorithm([...currArray], setCurrArray);
         algorithm([...currArray], setCurrArray);
+        algorithm([...currArray], setCurrArray);
     };
     useEffect(() => {
         if (tbs === 1)
@@ -29,7 +30,7 @@ const SortBox = ({array, algorithName, algorithm, theme, tbs}) => {
                         key={i}
                         style={{height: `${val}px`, backgroundColor: theme}}
                         className={`box ${theme}`}
-                        title={val}
+                        title={`${val} - Position in Array ${i + 1}`}
                     ></div>
                 )
             }

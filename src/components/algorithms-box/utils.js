@@ -3,13 +3,14 @@ const sleep = ms => {
 };
 
 export const selectionSort = async (array, stateSetter) => {
-    for (let i = 0; i < array.length; i += 1) 
+    for (let i = 0; i < array.length; i += 1) {
       for (let j = i + 1; j < array.length; j += 1)
         if (array[i] > array[j]) {
           [array[i], array[j]] = [array[j], array[i]];
           await sleep(10);
           stateSetter(array);
         }
+    }
 };
 
 export const insertionSort = async (array, stateSetter) => {
@@ -27,63 +28,95 @@ export const insertionSort = async (array, stateSetter) => {
 };
 
 export const bubbleSort = async (array, stateSetter) => {
-    for (let i = 0; i < array.length - 1; i += 1)
+    for (let i = 0; i < array.length - 1; i += 1) {
       for (let j = 0; j < array.length-1-i; j += 1)
         if (array[j] > array[j+1]) {
           [array[j], array[j+1]] = [array[j+1], array[j]];
           await sleep(10);
           stateSetter(array);
         }
+    }
+};
+
+const getPartition = async (array, left, right, stateSetter) => {
+  let pivot, i, j;
+  pivot = array[left];
+  i = left + 1;
+  j = right;
+  while (i <= j) {
+    while (array[i] < pivot)
+      i += 1;
+    while (array[j] > pivot)
+      j -= 1;
+    if (i <= j) {
+      [array[i], array[j]] = [array[j], array[i]];
+      i += 1;
+      j -= 1;
+      await sleep(30);
+      stateSetter(array);
+    }
+  }
+  if (i !== j) {
+    [array[j], array[left]] = [array[left], array[j]];
+    await sleep(30);
+    stateSetter(array);
+  }
+  await sleep(30);
+  stateSetter(array);
+  return j;
+};
+
+const quickSorter = async (array, left, right, stateSetter) => {
+  if (left < right) {
+    let pivotIndex = await getPartition(array, left, right, stateSetter);
+    quickSorter(array, left, pivotIndex - 1, stateSetter);
+    await sleep(30);
+    stateSetter(array);
+    quickSorter(array, pivotIndex + 1, right, stateSetter);
+    await sleep(30);
+    stateSetter(array);
+  }
 };
 
 export const quickSort = async (array, stateSetter) => {
-  if (array.length < 2)
-    return array;
-  let m = Math.floor(array.length / 2);
-  let lhs = [], mid = [], rhs = [];
-  const key = array[m];
-  for (let no of array){
-    if (no < key)
-      lhs.push(no);
-    else if (no > key)
-      rhs.push(no);
-    else
-      mid.push(no);
-  }
-  let leftHalf = await quickSort(lhs, stateSetter);
-  let rightHalf = await quickSort(rhs, stateSetter);
-  let toReturn = [...leftHalf, ...mid, ...rightHalf];
+  await quickSorter(array, 0, array.length - 1, stateSetter);
   await sleep(10);
-  stateSetter(toReturn);
-  return toReturn;
-};
-
-const merge = (left, right) => {
-  const output = [];
-  let i = 0, j = 0;
-  while (i < left.length && j < right.length) {
-    if (left[i] < right[j]) {
-      output.push(left[i]);
-      i+=1;
-    } else {
-      output.push(right[j]);
-      j+=1;
-    }
-  }
-  return [...output, ...left.slice(i), ...right.slice(j)];
+  stateSetter(array);
 };
 
 export const mergeSort = async (array, stateSetter) => {
-  if (array.length < 2) 
-    return array;
-  const mid = Math.floor(array.length / 2);
-  let leftSide = await mergeSort(array.slice(0, mid), stateSetter);
-  let rightSide = await mergeSort(array.slice(mid), stateSetter);
-  let toReturn = merge(leftSide, rightSide);
+  if (array.length > 1) {
+    let mid = Math.floor(array.length/2);
+    let l = array.slice(0, mid);
+    let r = array.slice(mid);
+    mergeSort(l, stateSetter);
+    mergeSort(r, stateSetter);
+    let i = 0, j = 0, k = 0;
+    while (i < l.length && j < r.length) {
+      if (l[i] < r[j])
+        array[k++] = l[i++];
+      else
+        array[k++] = r[j++];
+      await sleep(20);
+      stateSetter(array);
+    }
+    while (i < l.length) {
+      array[k++] = l[i++];
+      await sleep(10);
+      stateSetter(array);
+    }
+    while (j < r.length) {
+      array[k++] = r[j++];
+      await sleep(10);
+      stateSetter(array);
+    }
+    await sleep(10);
+    stateSetter(array);
+  }
   await sleep(10);
-  stateSetter(toReturn);
-  return toReturn;
+  stateSetter(array);
 };
+
 
 export const shellSort = async (array, stateSetter) => {
     let n = array.length;
