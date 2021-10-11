@@ -9,7 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      orginalArray: [...Array(84)].map(() => Math.floor(Math.random() * 300)),
+      orginalArray: [...Array(100)].map(() => Math.floor(Math.random() * 300)),
       toBeSorted: 0,
       viewDetails: true
     };

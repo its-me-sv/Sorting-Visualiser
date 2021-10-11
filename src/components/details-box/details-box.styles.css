@@ -14,9 +14,12 @@
 }
 
 .array-box {
+    padding-right: 1.4rem;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-gap: 7px;
+    max-height: 10rem;
+    overflow: auto;
 }
 
 .custom-button1 {

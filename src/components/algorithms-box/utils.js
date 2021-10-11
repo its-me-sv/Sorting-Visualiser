@@ -84,39 +84,39 @@ export const quickSort = async (array, stateSetter) => {
   stateSetter(array);
 };
 
-export const mergeSort = async (array, stateSetter) => {
-  if (array.length > 1) {
-    let mid = Math.floor(array.length/2);
-    let l = array.slice(0, mid);
-    let r = array.slice(mid);
-    mergeSort(l, stateSetter);
-    mergeSort(r, stateSetter);
-    let i = 0, j = 0, k = 0;
-    while (i < l.length && j < r.length) {
-      if (l[i] < r[j])
-        array[k++] = l[i++];
-      else
-        array[k++] = r[j++];
-      await sleep(20);
-      stateSetter(array);
-    }
-    while (i < l.length) {
-      array[k++] = l[i++];
-      await sleep(10);
-      stateSetter(array);
-    }
-    while (j < r.length) {
-      array[k++] = r[j++];
-      await sleep(10);
-      stateSetter(array);
-    }
-    await sleep(10);
-    stateSetter(array);
+const merge = async (arr, left, center, rightEnd, stateSetter) => {
+  let leftEnd = center, 
+      right = center + 1, 
+      cache = [];
+  while (left <= leftEnd && right <= rightEnd) {
+    if (arr[left] < arr[right]) cache.push(arr[left++]);//cache[cacheSize++] = arr[left++];
+    else cache.push(arr[right++]);//cache[cacheSize++] = arr[right++]
   }
+  while (left <= leftEnd) cache.push(arr[left++]);//cache[cacheSize++] = arr[left++];
+  while (right <= rightEnd) cache.push(arr[right++]);//cache[cacheSize++] = arr[right++];
+  while(cache.length !== 0) {
+    arr[rightEnd--] = cache.pop();
+  }
+  await sleep(10);
+  stateSetter(arr);
+};
+
+const merger = async (arr, left, right, stateSetter) => {
+  if (left < right) {
+    let center = Math.floor((left + right) / 2);
+    await merger(arr, left, center, stateSetter);
+    await merger(arr, center + 1, right, stateSetter);
+    await merge(arr, left, center, right, stateSetter);
+    await sleep(10);
+    stateSetter(arr);
+  }
+};
+
+export const mergeSort = async (array, stateSetter) => {
+  await merger(array, 0, array.length - 1, stateSetter);
   await sleep(10);
   stateSetter(array);
 };
-
 
 export const shellSort = async (array, stateSetter) => {
     let n = array.length;
