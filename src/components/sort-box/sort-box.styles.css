@@ -186,3 +186,9 @@ h3 {
     box-shadow:0px 5px 15px #feada6;
     background-color: #feada6;
 }
+
+@media only screen and (max-width: 768px) {
+  .sorted-container {
+    width: 300px;
+  }
+}
